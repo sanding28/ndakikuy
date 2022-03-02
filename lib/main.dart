@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ndakikuy/pages/Login_page.dart';
 import 'package:ndakikuy/pages/mulai_page.dart';
 import 'package:ndakikuy/pages/splash_page.dart';
 
@@ -13,7 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MulaiPage(),
+      routes: {
+        '/':(context) => SplashPage(),
+        '/Mulai-page':(context) => MulaiPage(),
+        '/Login-Page':(context) => LoginPage()
+      },
     );
   }
 }
