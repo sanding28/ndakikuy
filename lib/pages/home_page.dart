@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:ndakikuy/shared/theme.dart';
+import 'package:ndakikuy/widgets/trend_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({ Key? key }) : super(key: key);
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              margin: EdgeInsets.only(left: defaultMargin, top: 50 ),
+              margin: EdgeInsets.only(left: defaultMargin, top: 30 ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,25 +45,68 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: 60,
-              width: 60,
-              margin: EdgeInsets.only(top: 50),
+              height: 50,
+              width: 50,
+              margin: EdgeInsets.only(top: 30, right: 24),
               decoration : BoxDecoration(
                 shape: BoxShape.circle,
-                image: DecorationImage(image: AssetImage('assets/profile.png'))
+                image: DecorationImage(image: AssetImage('assets/profilpic.png'))
               )
             )
           ],
         ),
       );
     }
+    
+    Widget basecampTrend(){
+      return Container(
+        height: 291,
+        margin: EdgeInsets.only(left: 24, top: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 16,
+              width: 180,
+              child: Row(
+                children: [
+                  Text(
+                    'Sedang trend saat ini',
+                    style: blackTextStyle.copyWith(
+                      fontWeight: bold,
+                      fontSize: 14
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 255,
+              margin: EdgeInsets.only(top: 20),
+              width: double.infinity,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BasecampTrend(),
+                    BasecampTrend(),
+                    BasecampTrend(),
+                    BasecampTrend(),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          topBanner()
-        ],
-      ),
+    return ListView(
+      children: [
+        topBanner(),
+        basecampTrend()
+      ],
     );
   }
 }

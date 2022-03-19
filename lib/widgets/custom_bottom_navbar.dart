@@ -25,8 +25,8 @@ class CustomNavbar extends StatelessWidget {
         children: [
           Image.asset(
             imgaeUrl,
-            height: 22,
-            width: 22,
+            height: 21,
+            width: 21,
             color: context.read<PageCubit>().state == index ? keyPrimaryColor : Colors.black,
           )
           // Container(

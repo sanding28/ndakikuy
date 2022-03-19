@@ -44,14 +44,17 @@ class MainPage extends StatelessWidget {
               topRight: Radius.circular(20),
             ) 
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomNavbar(imgaeUrl: 'assets/home.png', index: 0,),
-              CustomNavbar(imgaeUrl: 'assets/icon_gunung.png', index: 1,),
-              CustomNavbar(imgaeUrl: 'assets/book.png', index: 2,),
-              CustomNavbar(imgaeUrl: 'assets/profile.png', index: 3,),
-            ],
+          child: Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomNavbar(imgaeUrl: 'assets/home.png', index: 0,),
+                CustomNavbar(imgaeUrl: 'assets/icon_gunung.png', index: 1,),
+                CustomNavbar(imgaeUrl: 'assets/book.png', index: 2,),
+                CustomNavbar(imgaeUrl: 'assets/profile.png', index: 3,),
+              ],
+            ),
           ),
         ),
       );
