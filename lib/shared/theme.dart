@@ -8,6 +8,7 @@ Color btnColor = Color(0xff1A627D);
 Color keyBlackColor = Color(0xff1F1449);
 Color keyOrangeColor = Color(0xffEF5164);
 Color keyWhiteColor = Color(0xffFFFFFF);
+Color keybackgroundColor =Color(0xffECEEF2);
 
 double defaultMargin = 24;
 
