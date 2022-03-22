@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ndakikuy/shared/theme.dart';
+import 'package:ndakikuy/widgets/basecamp_new.dart';
 import 'package:ndakikuy/widgets/trend_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
 
     Widget topBanner(){
       return Container(
-        height: 230,
+        height: 200,
         width: double.infinity,
         decoration: BoxDecoration(
           color: keyPrimaryColor,
@@ -61,7 +62,7 @@ class HomePage extends StatelessWidget {
     Widget basecampTrend(){
       return Container(
         height: 291,
-        margin: EdgeInsets.only(left: 24, top: 35),
+        margin: EdgeInsets.only(left: 24, top: 240),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -102,11 +103,47 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    return ListView(
-      children: [
-        topBanner(),
-        basecampTrend()
-      ],
+    Widget basecampNew(){
+      return Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(left: 24, top: 550, bottom: 100),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 16,
+              child: Row(
+                children: [
+                  Text(
+                    'Baru berganung',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: bold
+                    ),
+                  )
+                ],
+              )
+            ),
+            BasecampNew(),
+            BasecampNew(),
+            BasecampNew(),
+            BasecampNew(),
+            BasecampNew(),
+          ],
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            topBanner(),
+            basecampTrend(),
+            basecampNew()
+          ],
+        ),
+      ),
     );
   }
 }
