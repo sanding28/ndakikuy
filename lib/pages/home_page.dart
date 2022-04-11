@@ -13,10 +13,10 @@ class HomePage extends StatelessWidget {
 
     Widget topBanner(){
       return Container(
-        height: 200,
+        height: 100,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: keyPrimaryColor,
+          color: keyWhiteColor,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 2,),
                   Text(
                     'Mau mendaki ke mana hari ini?',
-                    style: whiteTextStyle.copyWith(
+                    style: blackTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: light
                     ),
@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
     Widget basecampTrend(){
       return Container(
         height: 291,
-        margin: EdgeInsets.only(left: 24, top: 240),
+        margin: EdgeInsets.only(left: 24, top: 130),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -106,7 +106,7 @@ class HomePage extends StatelessWidget {
     Widget basecampNew(){
       return Container(
         width: double.infinity,
-        margin: EdgeInsets.only(left: 24, top: 550, bottom: 100),
+        margin: EdgeInsets.only(left: 24, top: 440, bottom: 100),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -115,7 +115,7 @@ class HomePage extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Baru berganung',
+                    'Baru bergabung',
                     style: blackTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: bold
