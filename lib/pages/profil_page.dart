@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:ndakikuy/shared/theme.dart';
+import 'package:ndakikuy/widgets/custom_button.dart';
+import 'package:ndakikuy/widgets/profile_card.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({ Key? key }) : super(key: key);
@@ -72,11 +74,45 @@ class ProfilPage extends StatelessWidget {
         ),
       );
     }
+
+    Widget profileContent(){
+      return Container(
+        margin: EdgeInsets.only(top: 256, left: 24, right: 24),
+        child: Column(
+          children: [
+            ProfileCard(imageUrl: 'assets/history.png', name: 'My History'),
+            ProfileCard(imageUrl: 'assets/book.png', name: 'My orders'),
+            ProfileCard(imageUrl: 'assets/settings.png', name: 'Settings'),
+            ProfileCard(imageUrl: 'assets/Help.png', name: 'Help'),
+          ],
+        ),
+      );
+    }
+
+    Widget buttonLogout(){
+      return Container(
+        margin: EdgeInsets.only(top: 550,),
+        child: Container(
+          margin: EdgeInsets.only(top: 40, bottom: 80),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(
+                tittle: 'Logout', 
+                onPressed: (){}),
+            ],
+          ),
+        )
+      );
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            topBanner()
+            topBanner(),
+            profileContent(),
+            buttonLogout()
           ],
         ),
       ),
