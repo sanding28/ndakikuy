@@ -1,4 +1,4 @@
-package com.example.ndakikuy
+package com.sanding.ndakikuy
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,11 +1,17 @@
 // ignore_for_file: prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ndakikuy/cubit/auth_cubit.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/custom_button.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({ Key? key }) : super(key: key);
+  SignUpPage({ Key? key }) : super(key: key);
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +50,7 @@ class SignUpPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                controller: nameController,
                 cursorColor: keyBlackColor,
                 decoration: InputDecoration(
                   hintText: 'Input your Full Name',
@@ -73,6 +80,7 @@ class SignUpPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                controller: emailController,
                 cursorColor: keyBlackColor,
                 decoration: InputDecoration(
                   hintText: 'Input your email...',
@@ -102,6 +110,7 @@ class SignUpPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                controller: passwordController,
                 cursorColor: keyBlackColor,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -136,16 +145,42 @@ class SignUpPage extends StatelessWidget {
     }
 
     Widget button(){
-      return CustomButton(
-        margin: EdgeInsets.only(
-          top: 50,
-          left: defaultMargin,
-          right: defaultMargin
-        ),
-        tittle: 'Sign Up', 
-        onPressed: (){
-          Navigator.pushNamed(context, '/main-page');
-        }
+      return BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.pushNamedAndRemoveUntil(context, '/main-page', (route) => false);
+          }
+          else if (state is AuthFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: keyOrangeColor,
+                ),
+              );
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return CustomButton(
+              margin: EdgeInsets.only(
+                top: 50,
+                left: defaultMargin,
+                right: defaultMargin
+              ),
+              tittle: 'Sign Up', 
+              onPressed: (){
+                context.read<AuthCubit>().signUp(
+                  email: emailController.text, 
+                  password: passwordController.text, 
+                  name: nameController.text,
+                );
+              }
+            );
+        },
       );
     }
 
