@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ndakikuy/cubit/auth_cubit.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/basecamp_new.dart';
 import 'package:ndakikuy/widgets/trend_card.dart';
@@ -22,38 +24,37 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              margin: EdgeInsets.only(left: defaultMargin, top: 30 ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hello,\nNama User',
-                    style: blackTextStyle.copyWith(
-                      fontWeight: semiBold,
-                      fontSize: 20
-                    ),
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                if (state is AuthSuccess) {
+                  return Container(
+                  margin: EdgeInsets.only(left: defaultMargin, top: 30 ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hello,\n${state.user.name}',
+                        style: blackTextStyle.copyWith(
+                          fontWeight: semiBold,
+                          fontSize: 20
+                        ),
+                      ),
+                      SizedBox(height: 2,),
+                      Text(
+                        'Mau mendaki ke mana hari ini?',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 14,
+                          fontWeight: light
+                        ),
+                      )
+                    ],
                   ),
-                  SizedBox(height: 2,),
-                  Text(
-                    'Mau mendaki ke mana hari ini?',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: light
-                    ),
-                  )
-                ],
-              ),
+                );
+                } else{
+                  return Container();
+                }
+              },
             ),
-            Container(
-              height: 50,
-              width: 50,
-              margin: EdgeInsets.only(top: 30, right: 24),
-              decoration : BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(image: AssetImage('assets/profilpic.png'))
-              )
-            )
           ],
         ),
       );

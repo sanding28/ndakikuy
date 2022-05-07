@@ -1,11 +1,16 @@
 // ignore_for_file: prefer_const_constructors, file_names, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ndakikuy/cubit/auth_cubit.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/custom_button.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({ Key? key }) : super(key: key);
+  LoginPage({ Key? key }) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +71,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                controller: emailController,
                 cursorColor: keyBlackColor,
                 decoration: InputDecoration(
                   hintText: 'Input your email...',
@@ -95,6 +101,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                controller: passwordController,
                 cursorColor: keyBlackColor,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -128,47 +135,63 @@ class LoginPage extends StatelessWidget {
     }
 
     Widget buttonSignIn(){
-      return Container(
-        width: 200,
-        height: 140,
-        child: Column(
-          children: [
-            CustomButton(
-              margin: EdgeInsets.only(top: 40, bottom: 20),
-              width: 193,
+      return BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.pushNamedAndRemoveUntil(context, '/main-page', (route) => false);
+          }
+          else if (state is AuthFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: keyOrangeColor,
+                ),
+              );
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return CustomButton(
+              margin: EdgeInsets.only(
+                top: 50,
+                left: defaultMargin,
+                right: defaultMargin
+              ),
               tittle: 'Login', 
               onPressed: (){
-                Navigator.pushNamed(context, '/main-page');
+                context.read<AuthCubit>().signIn(
+                  email: emailController.text, 
+                  password: passwordController.text,
+                );
               }
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Don’t have an account?',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 12
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/Sign-Up');
-                  },
-                  child: Text(
-                    'SignUp',
-                    style: orangeTextStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: bold
-                    ),
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
+            );
+        },
       );
     }
 
+    Widget signUpButton(){
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/Sign-Up');
+        },
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(top: 10, bottom: 73),
+          child: Text(
+            'Dont have an account? Sign Up',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: light,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: keyWhiteColor,
       body: SafeArea(
@@ -176,7 +199,8 @@ class LoginPage extends StatelessWidget {
           children: [
             bannerLogo(),
             inpuSection(),
-            buttonSignIn()
+            buttonSignIn(),
+            signUpButton()
           ],
         )
       ),

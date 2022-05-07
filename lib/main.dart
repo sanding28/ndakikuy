@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
           '/':(context) => SplashPage(),
           '/Mulai-page':(context) => MulaiPage(),
           '/Sign-Up':(context) => SignUpPage(),
+          '/Login':(context) => LoginPage(),
           '/Login-Page':(context) => LoginPage(),
           '/main-page':(context) => MainPage()
         },

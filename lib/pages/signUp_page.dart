@@ -9,9 +9,9 @@ import 'package:ndakikuy/widgets/custom_button.dart';
 class SignUpPage extends StatelessWidget {
   SignUpPage({ Key? key }) : super(key: key);
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -184,12 +184,33 @@ class SignUpPage extends StatelessWidget {
       );
     }
 
+    Widget signIn(){
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/Login');
+        },
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(top: 30, bottom: 73),
+          child: Text(
+            'already have an account? Login',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: light,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       body: ListView(
         children: [
           title(),
           inputSection(),
-          button()
+          button(),
+          signIn()
         ],
       ),
     );
