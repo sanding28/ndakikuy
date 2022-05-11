@@ -1,13 +1,18 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:ndakikuy/models/basecamp_model.dart';
 import 'package:ndakikuy/pages/form_pendaki.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/custom_button.dart';
 import 'package:ndakikuy/widgets/unordered_list.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({ Key? key }) : super(key: key);
+
+  final BasecampModel basecamp;
+
+  const DetailPage(this.basecamp, { Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class DetailPage extends StatelessWidget {
         height: 350,
         width: double.infinity,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/raung_kalibaru.jfif'), fit: BoxFit.cover)
+          image: DecorationImage(image: NetworkImage(basecamp.imageUrl), fit: BoxFit.cover)
         ),
       );
     }
@@ -38,7 +43,7 @@ class DetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Gunung Merbabu Via Selo',
+                basecamp.name,
                 style: blackTextStyle.copyWith(
                   fontWeight: bold,
                   fontSize: 18
@@ -53,7 +58,7 @@ class DetailPage extends StatelessWidget {
               ),
               SizedBox(height: 10,),
               Text(
-                'Merbabu via selo merupakan pos pendakian\ngunung merbabu yang terletak  Dusun Pakis, Desa Tarurabatang, Kecamatan Selo, Kabupaten Boyolali. Pos pendakian ini dikenal karena keindahan sabana yang sangat luas.',
+                basecamp.about,
                 style: blackTextStyle.copyWith(
                   fontSize: 14,
                   fontWeight: light
@@ -84,7 +89,7 @@ class DetailPage extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               Container(
-                height: 153,
+                height: 260,
                 width: 260,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,6 +107,17 @@ class DetailPage extends StatelessWidget {
                     UnordredList(tittle: 'Tidak membawa sampah turun'),
                     UnordredList(tittle: 'Menebang pohon'),
                     UnordredList(tittle: 'Membawa senjata tajam\n(dengan panjang lebih dari 30cm)'),
+                    SizedBox(height:15),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id',
+                        symbol: 'RP ',
+                        decimalDigits: 0
+                      ).format(basecamp.price),
+                      style: blackTextStyle.copyWith(
+                        fontWeight: bold
+                      ),
+                    )
                   ],
                 ),
               )
@@ -114,7 +130,7 @@ class DetailPage extends StatelessWidget {
     Widget buttonLanjut(){
       return Container(
         color: keybackgroundColor,
-        margin: EdgeInsets.only(top: 880,),
+        margin: EdgeInsets.only(top: 990,),
         child: Container(
           margin: EdgeInsets.only(top: 40, bottom: 80),
           child: Row(

@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ndakikuy/cubit/auth_cubit.dart';
-import 'package:ndakikuy/pages/mulai_page.dart';
 import 'package:ndakikuy/shared/theme.dart';
 
 class SplashPage extends StatefulWidget {

@@ -3,12 +3,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ndakikuy/cubit/auth_cubit.dart';
+import 'package:ndakikuy/cubit/basecamp_cubit.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/basecamp_new.dart';
 import 'package:ndakikuy/widgets/trend_card.dart';
 
-class HomePage extends StatelessWidget {
+import '../models/basecamp_model.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    context.read<BasecampCubit>().fetchBasecamp();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +75,7 @@ class HomePage extends StatelessWidget {
       );
     }
     
-    Widget basecampTrend(){
+    Widget basecampTrend(List<BasecampModel> basecamp){
       return Container(
         height: 291,
         margin: EdgeInsets.only(left: 24, top: 130),
@@ -90,12 +105,9 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BasecampTrend(),
-                    BasecampTrend(),
-                    BasecampTrend(),
-                    BasecampTrend(),
-                  ],
+                  children: basecamp.map((BasecampModel basecamp) {
+                    return BasecampTrend(basecamp);
+                  }).toList(),
                 ),
               ),
             )
@@ -135,16 +147,35 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            topBanner(),
-            basecampTrend(),
-            basecampNew()
-          ],
-        ),
-      ),
+    return BlocConsumer<BasecampCubit, BasecampState>(
+      listener: (context, state) {
+        if(state is BasecampFailed){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: keyOrangeColor,
+              content: Text(state.error),
+            )
+          );
+        }
+      },
+      builder: (context, state) {
+        if(state is BasecampSuccess){
+          return Scaffold(
+          body: SingleChildScrollView(
+            child: Stack(
+              children: [
+                topBanner(),
+                basecampTrend(state.basecamp),
+                basecampNew()
+              ],
+            ),
+            ),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

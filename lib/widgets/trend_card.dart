@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ndakikuy/models/basecamp_model.dart';
 import 'package:ndakikuy/pages/details_pages.dart';
 import 'package:ndakikuy/shared/theme.dart';
 
 class BasecampTrend extends StatelessWidget {
-  const BasecampTrend({ Key? key }) : super(key: key);
+  final BasecampModel basecamp;
+  const BasecampTrend(this.basecamp,{ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class BasecampTrend extends StatelessWidget {
       child: GestureDetector(
         onTap: (){
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DetailPage()));
+            context, MaterialPageRoute(builder: (context) => DetailPage(basecamp)));
       },
         child: Container(
           margin: EdgeInsets.only(left: 10),
@@ -41,12 +43,12 @@ class BasecampTrend extends StatelessWidget {
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(image: AssetImage('assets/merbabu_selo.jfif'), fit: BoxFit.cover)
+                  image: DecorationImage(image: NetworkImage(basecamp.imageUrl), fit: BoxFit.cover)
                 ),
               ),
               SizedBox(height: 12,),
               Text(
-                'Merbabu Via Selo',
+                basecamp.name,
                 style: blackTextStyle.copyWith(
                   fontWeight: bold,
                   fontSize: 12
@@ -54,7 +56,7 @@ class BasecampTrend extends StatelessWidget {
               ),
               SizedBox(height: 12,),
               Text(
-                'Boyolali',
+                basecamp.city,
                 style: blackTextStyle.copyWith(
                   fontWeight: light,
                   fontSize: 12
