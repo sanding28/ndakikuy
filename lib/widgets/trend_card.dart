@@ -31,7 +31,7 @@ class BasecampTrend extends StatelessWidget {
         onTap: (){
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => DetailPage(basecamp)));
-      },
+        },
         child: Container(
           margin: EdgeInsets.only(left: 10),
           child: Column(

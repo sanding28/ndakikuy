@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:alan_voice/alan_voice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ndakikuy/cubit/page_cubit.dart';
@@ -10,8 +11,37 @@ import 'package:ndakikuy/pages/profil_page.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/custom_bottom_navbar.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({ Key? key }) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+
+  // _MainPageState() {
+  // /// Init Alan Button with project key from Alan Studio      
+  // AlanVoice.addButton("3129f8ead41d7ca7329eed5b83c76f592e956eca572e1d8b807a3e2338fdd0dc/stage");
+
+  // /// Handle commands from Alan Studio
+  // AlanVoice.onCommand.add((command) => _handleCommand(command.data));
+  // }
+
+  // void _handleCommand(Map<String, dynamic> command){
+  //   switch (command['command']) {
+  //     case 'mountList':
+  //       Navigator.push(
+  //           context, MaterialPageRoute(builder: (context) => MountPage()));
+  //       break;
+  //     case 'back':
+  //       Navigator.pop(context);
+  //       break;
+  //     default:
+  //   }
+  // }
+
+
 
   @override
   Widget build(BuildContext context) {

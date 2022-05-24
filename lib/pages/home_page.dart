@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
+import 'package:alan_voice/alan_voice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ndakikuy/cubit/auth_cubit.dart';
 import 'package:ndakikuy/cubit/basecamp_cubit.dart';
+import 'package:ndakikuy/pages/mount_page.dart';
 import 'package:ndakikuy/shared/theme.dart';
 import 'package:ndakikuy/widgets/basecamp_new.dart';
 import 'package:ndakikuy/widgets/trend_card.dart';
@@ -21,8 +23,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    AlanVoice.addButton("3129f8ead41d7ca7329eed5b83c76f592e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+
+  /// Handle commands from Alan Studio
+    AlanVoice.onCommand.add((command) => _handleCommand(command.data));
     context.read<BasecampCubit>().fetchBasecamp();
     super.initState();
+  }
+
+  void _handleCommand(Map<String, dynamic> command){
+    switch (command['command']) {
+      case 'mountList':
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MountPage()));
+        break;
+      case 'back':
+        Navigator.pop(context);
+        break;
+      default:
+    }
   }
 
   @override
@@ -116,7 +135,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    Widget basecampNew(){
+    Widget basecampNew(List<BasecampModel> basecamp){
       return Container(
         width: double.infinity,
         margin: EdgeInsets.only(left: 24, top: 440, bottom: 100),
@@ -137,11 +156,11 @@ class _HomePageState extends State<HomePage> {
                 ],
               )
             ),
-            BasecampNew(),
-            BasecampNew(),
-            BasecampNew(),
-            BasecampNew(),
-            BasecampNew(),
+            Column(
+              children: basecamp.map((BasecampModel basecamp) {
+                return BasecampNew(basecamp);
+              }).toList(),
+            )
           ],
         ),
       );
@@ -166,7 +185,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 topBanner(),
                 basecampTrend(state.basecamp),
-                basecampNew()
+                basecampNew(state.basecamp)
               ],
             ),
             ),

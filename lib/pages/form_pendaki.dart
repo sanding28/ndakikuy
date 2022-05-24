@@ -1,7 +1,9 @@
 // ignore_for_file: unused_field, sized_box_for_whitespace, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ndakikuy/shared/theme.dart';
+import 'package:ndakikuy/widgets/custom_button.dart';
 
 class FormPendaki extends StatefulWidget {
   const FormPendaki({ Key? key }) : super(key: key);
@@ -12,6 +14,11 @@ class FormPendaki extends StatefulWidget {
 
 class _FormPendakiState extends State<FormPendaki> {
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController alamatController = TextEditingController();
+  final TextEditingController noHpController = TextEditingController();
+  final TextEditingController ktpController = TextEditingController();
+
   String _name ='';
   String _alamat ='';
   String _ktp = '';
@@ -19,6 +26,9 @@ class _FormPendakiState extends State<FormPendaki> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference forms = firestore.collection('forms');
 
     Widget formPendaki(){
       return Container(
@@ -41,6 +51,7 @@ class _FormPendakiState extends State<FormPendaki> {
               ),
               const SizedBox(height: 30,),
               TextFormField(
+                controller: nameController,
                 decoration: const InputDecoration(
                   hintText: 'Full Name'
                 ),
@@ -50,6 +61,7 @@ class _FormPendakiState extends State<FormPendaki> {
               ),
               const SizedBox(height: 20,),
               TextFormField(
+                controller: alamatController,
                 decoration: const InputDecoration(
                   hintText: 'Alamat'
                 ),
@@ -59,6 +71,7 @@ class _FormPendakiState extends State<FormPendaki> {
               ),
               const SizedBox(height: 20,),
               TextFormField(
+                controller: ktpController,
                 decoration: const InputDecoration(
                   hintText: 'No Ktp'
                 ),
@@ -68,6 +81,7 @@ class _FormPendakiState extends State<FormPendaki> {
               ),
               const SizedBox(height: 20,),
               TextFormField(
+                controller: noHpController,
                 decoration: const InputDecoration(
                   hintText: 'No.Hp'
                 ),
@@ -270,11 +284,30 @@ class _FormPendakiState extends State<FormPendaki> {
       );
     }
 
+    Widget buttonBayar(){
+      return Container(
+        margin: EdgeInsets.only(bottom: 40),
+        child: CustomButton(
+          tittle: 'Bayar', 
+          onPressed: (){
+            forms.add({
+              'name' : nameController.text,
+              'alamat' : alamatController.text,
+              'ktp' : int.tryParse(ktpController.text) ?? 0,
+              'noHp' : int.tryParse(noHpController.text) ?? 0,
+            });
+            Navigator.pushNamed(context, '/main-page');
+          }
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(child: ListView(
         children: [
           formPendaki(),
-          methodAndSummary()
+          methodAndSummary(),
+          buttonBayar()
         ],
       )),
     );
