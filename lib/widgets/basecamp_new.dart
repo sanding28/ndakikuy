@@ -17,7 +17,7 @@ class BasecampNew extends StatelessWidget {
       },
       child: Container(
         height: 90,
-        width: 327,
+        width: double.infinity,
         margin: const EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
           color: keyWhiteColor,
@@ -45,7 +45,7 @@ class BasecampNew extends StatelessWidget {
             Container(
               height: 70,
               margin: const EdgeInsets.only( top: 16),
-              width: 174,
+              width: 168,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

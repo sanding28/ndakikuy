@@ -36,7 +36,7 @@ class ProfilPage extends StatelessWidget {
                     children: [
                       Container(
                         height: 100,
-                        width: 100,
+                        width: 99,
                         margin: EdgeInsets.only(right: 24,),
                         decoration : BoxDecoration(
                           shape: BoxShape.circle,

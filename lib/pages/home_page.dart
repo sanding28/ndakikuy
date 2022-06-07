@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    AlanVoice.addButton("3129f8ead41d7ca7329eed5b83c76f592e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+    AlanVoice.addButton("3129f8ead41d7ca7329eed5b83c76f592e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_RIGHT);
 
   /// Handle commands from Alan Studio
     AlanVoice.onCommand.add((command) => _handleCommand(command.data));
