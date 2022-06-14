@@ -71,6 +71,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                key: Key('email'),
                 controller: emailController,
                 cursorColor: keyBlackColor,
                 decoration: InputDecoration(
@@ -101,6 +102,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 6,),
               TextFormField(
+                key: Key('password'),
                 controller: passwordController,
                 cursorColor: keyBlackColor,
                 obscureText: true,
@@ -156,6 +158,7 @@ class LoginPage extends StatelessWidget {
             );
           }
           return CustomButton(
+            key: Key('sign-in'),
               margin: EdgeInsets.only(
                 top: 50,
                 left: defaultMargin,

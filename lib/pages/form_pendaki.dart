@@ -1,103 +1,166 @@
-// ignore_for_file: unused_field, sized_box_for_whitespace, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ndakikuy/shared/theme.dart';
-import 'package:ndakikuy/widgets/custom_button.dart';
+import 'package:intl/intl.dart';
+import 'package:ndakikuy/models/basecamp_model.dart';
 
-class FormPendaki extends StatefulWidget {
-  const FormPendaki({ Key? key }) : super(key: key);
+import '../shared/theme.dart';
+import '../widgets/custom_button.dart';
 
-  @override
-  State<FormPendaki> createState() => _FormPendakiState();
-}
-
-class _FormPendakiState extends State<FormPendaki> {
+class FormPendaki extends StatelessWidget {
+  final BasecampModel basecamp;
+  FormPendaki(this.basecamp,{ Key? key }) : super(key: key);
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController alamatController = TextEditingController();
   final TextEditingController noHpController = TextEditingController();
   final TextEditingController ktpController = TextEditingController();
 
-  String _name ='';
-  String _alamat ='';
-  String _ktp = '';
-  String _noHp = '';
-
   @override
   Widget build(BuildContext context) {
 
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference forms = firestore.collection('forms');
-
+    
     Widget formPendaki(){
-      return Container(
-        height: 390,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: keybackgroundColor
-        ),
-        child: Container(
-          margin: const EdgeInsets.only(right: 24, left:24, top: 40),
+
+      Widget nameInput(){
+        return Container(
+          margin: EdgeInsets.only(top: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'form pendaki dan pembayaran',
-                style: blackTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: semiBold
-                ),
+                'Nama Lengkap',
+                style: blackTextStyle,
               ),
-              const SizedBox(height: 30,),
+              SizedBox(height: 8,),
               TextFormField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Full Name'
+                cursorColor: keyBlackColor,
+                decoration: InputDecoration(
+                  hintText: 'masukan nama lengkap anda',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), 
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: keyPrimaryColor),
+                    borderRadius: BorderRadius.circular(15),
+                  )
                 ),
-                onChanged: (value){
-                  _name = value;
-                },
+              )
+            ],
+          )
+        );
+      }
+
+      Widget alamatInput(){
+        return Container(
+          margin: EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Alamat Lengkap',
+                style: blackTextStyle,
               ),
-              const SizedBox(height: 20,),
+              SizedBox(height: 8,),
               TextFormField(
                 controller: alamatController,
-                decoration: const InputDecoration(
-                  hintText: 'Alamat'
+                cursorColor: keyBlackColor,
+                decoration: InputDecoration(
+                  hintText: 'masukan alamat anda',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), 
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: keyPrimaryColor),
+                    borderRadius: BorderRadius.circular(15),
+                  )
                 ),
-                onChanged: (value){
-                  _alamat = value;
-                },
+              )
+            ],
+          )
+        );
+      }
+
+      Widget ktpInput(){
+        return Container(
+          margin: EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'No Ktp',
+                style: blackTextStyle,
               ),
-              const SizedBox(height: 20,),
+              SizedBox(height: 8,),
               TextFormField(
-                controller: ktpController,
-                decoration: const InputDecoration(
-                  hintText: 'No Ktp'
+               controller: ktpController,
+                cursorColor: keyBlackColor,
+                decoration: InputDecoration(
+                  hintText: 'masukan np ktp anda',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), 
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: keyPrimaryColor),
+                    borderRadius: BorderRadius.circular(15),
+                  )
                 ),
-                onChanged: (value){
-                  _ktp = value;
-                },
+              )
+            ],
+          )
+        );
+      }
+
+      Widget noHpInput(){
+        return Container(
+          margin: EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'No Handphone',
+                style: blackTextStyle,
               ),
-              const SizedBox(height: 20,),
+              SizedBox(height: 8,),
               TextFormField(
                 controller: noHpController,
-                decoration: const InputDecoration(
-                  hintText: 'No.Hp'
+                cursorColor: keyBlackColor,
+                decoration: InputDecoration(
+                  hintText: 'masukan no hp anda',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), 
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: keyPrimaryColor),
+                    borderRadius: BorderRadius.circular(15),
+                  )
                 ),
-                onChanged: (value){
-                  _noHp = value;
-                },
-              ),
-              // CheckboxListTile(value: , onChanged: onChanged)
+              )
             ],
-          ),
+          )
+        );
+      }
+
+      return Container(
+        padding: EdgeInsets.only(left: defaultMargin, right: defaultMargin),
+        child: Column(
+          children: [
+            nameInput(),
+            alamatInput(),
+            ktpInput(),
+            noHpInput(),
+          ],
         ),
       );
     }
 
     Widget methodAndSummary(){
       return Container(
+        margin: EdgeInsets.only(top: 20),
         height: 400,
         width: double.infinity,
         color: keybackgroundColor,
@@ -179,7 +242,7 @@ class _FormPendakiState extends State<FormPendaki> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 20),
-                    height: 176,
+                    height: 180,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -201,9 +264,12 @@ class _FormPendakiState extends State<FormPendaki> {
                                 ),
                               ),
                               Text(
-                                'Rp 40.000',
+                                NumberFormat.currency(
+                                  locale: 'id',
+                                  symbol: 'RP ',
+                                  decimalDigits: 0
+                                ).format(basecamp.price),
                                 style: blackTextStyle.copyWith(
-                                  fontSize: 12,
                                   fontWeight: bold
                                 ),
                               )
@@ -222,7 +288,11 @@ class _FormPendakiState extends State<FormPendaki> {
                                 ),
                               ),
                               Text(
-                                'Rp 1000',
+                                '5%',
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: bold
+                                ),
                               )
                             ],
                           ),
@@ -239,9 +309,9 @@ class _FormPendakiState extends State<FormPendaki> {
                                 ),
                               ),
                               Text(
-                                'Rp 10.000',
+                                '10%',
                                 style: blackTextStyle.copyWith(
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   fontWeight: bold
                                 ),
                               )
@@ -267,7 +337,14 @@ class _FormPendakiState extends State<FormPendaki> {
                                 ),
                               ),
                               Text(
-                                'Rp 51.000',
+                                NumberFormat.currency(
+                                  locale: 'id',
+                                  symbol: 'RP ',
+                                  decimalDigits: 0
+                                ).format(basecamp.price + basecamp.price * 0.1 + basecamp.price * 0.05),
+                                style: blackTextStyle.copyWith(
+                                  fontWeight: bold
+                                ),
                               )
                             ],
                           ),
@@ -285,32 +362,36 @@ class _FormPendakiState extends State<FormPendaki> {
     }
 
     Widget buttonBayar(){
-      return Container(
-        margin: EdgeInsets.only(bottom: 40),
-        child: CustomButton(
-          tittle: 'Bayar', 
-          onPressed: (){
-            forms.add({
-              'name' : nameController.text,
-              'alamat' : alamatController.text,
-              'ktp' : int.tryParse(ktpController.text) ?? 0,
-              'noHp' : int.tryParse(noHpController.text) ?? 0,
-            });
-            Navigator.pushNamed(context, '/main-page');
-          }
+      return Center(
+        child: Container(
+          margin: EdgeInsets.only(bottom: 40),
+          child: CustomButton(
+            tittle: 'Bayar', 
+            onPressed: (){
+              forms.add({
+                'name' : nameController.text,
+                'alamat' : alamatController.text,
+                'ktp' : int.tryParse(ktpController.text) ?? 0,
+                'noHp' : int.tryParse(noHpController.text) ?? 0,
+                'basecamp': basecamp.name,
+              });
+              Navigator.pushNamed(context, '/main-page');
+            }
+          ),
         ),
       );
     }
 
+    
     return Scaffold(
-      body: SafeArea(child: ListView(
+      backgroundColor: keybackgroundColor,
+      body: ListView(
         children: [
           formPendaki(),
           methodAndSummary(),
           buttonBayar()
         ],
-      )),
+      ),
     );
-    
   }
 }

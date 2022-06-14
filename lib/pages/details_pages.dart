@@ -140,7 +140,7 @@ class DetailPage extends StatelessWidget {
                 tittle: 'Lanjutkan', 
                 onPressed: (){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => FormPendaki()));
+                    context, MaterialPageRoute(builder: (context) => FormPendaki(basecamp)));
                 }),
             ],
           ),
