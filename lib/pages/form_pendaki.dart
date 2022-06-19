@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +8,24 @@ import 'package:ndakikuy/models/basecamp_model.dart';
 import '../shared/theme.dart';
 import '../widgets/custom_button.dart';
 
-class FormPendaki extends StatelessWidget {
+class FormPendaki extends StatefulWidget {
   final BasecampModel basecamp;
   FormPendaki(this.basecamp,{ Key? key }) : super(key: key);
 
+  @override
+  State<FormPendaki> createState() => _FormPendakiState();
+}
+
+class _FormPendakiState extends State<FormPendaki> {
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController alamatController = TextEditingController();
+
   final TextEditingController noHpController = TextEditingController();
+
   final TextEditingController ktpController = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -148,11 +158,28 @@ class FormPendaki extends StatelessWidget {
       return Container(
         padding: EdgeInsets.only(left: defaultMargin, right: defaultMargin),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             nameInput(),
             alamatInput(),
             ktpInput(),
             noHpInput(),
+            SizedBox(height: 20,),
+            ElevatedButton(
+              onPressed: (){
+                showDatePicker(
+                  context: context, 
+                  initialDate: DateTime.now(), 
+                  firstDate: DateTime.now(), 
+                  lastDate: DateTime(2023),
+                ).then((value) => 
+                  setState(() {
+                    selectedDate = value!;
+                  })
+                );
+              }, 
+              child: Text('Pilih Tanggal')
+            )
           ],
         ),
       );
@@ -268,7 +295,7 @@ class FormPendaki extends StatelessWidget {
                                   locale: 'id',
                                   symbol: 'RP ',
                                   decimalDigits: 0
-                                ).format(basecamp.price),
+                                ).format(widget.basecamp.price),
                                 style: blackTextStyle.copyWith(
                                   fontWeight: bold
                                 ),
@@ -341,7 +368,7 @@ class FormPendaki extends StatelessWidget {
                                   locale: 'id',
                                   symbol: 'RP ',
                                   decimalDigits: 0
-                                ).format(basecamp.price + basecamp.price * 0.1 + basecamp.price * 0.05),
+                                ).format(widget.basecamp.price + widget.basecamp.price * 0.1 + widget.basecamp.price * 0.05),
                                 style: blackTextStyle.copyWith(
                                   fontWeight: bold
                                 ),
@@ -373,7 +400,8 @@ class FormPendaki extends StatelessWidget {
                 'alamat' : alamatController.text,
                 'ktp' : int.tryParse(ktpController.text) ?? 0,
                 'noHp' : int.tryParse(noHpController.text) ?? 0,
-                'basecamp': basecamp.name,
+                'basecamp': widget.basecamp.name,
+                'date' : selectedDate,
               });
               Navigator.pushNamed(context, '/main-page');
             }
